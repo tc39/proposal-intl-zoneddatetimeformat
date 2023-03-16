@@ -25,7 +25,39 @@ There was an earlier attempt in the Temporal proposal to change Intl.DateTimeFor
 This proposal propose to use a new format Intl.ZonedDateTimeFormat to format [Temporal.ZonedDateTime](https://tc39.es/proposal-temporal/#sec-temporal-zoneddatetime-objects) objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
 
 
+# API Proposal
+## Intl.ZonedDateTimeFormat constructor
+Same as Intl.DateTimeFormat except it will throw RangeError if timeZone is presented in the option bag.
+## Intl.ZonedDateTimeFormat.supportedLocales()
+## Intl.ZonedDateTimeFormat.prototype.resolvedOptions()
+without return timeZone
 
+## Intl.ZonedDateTimeFormat.prototype.format(x)
+Throw TypeError if the x is not a Temporal.ZonedDateTime 
+(Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
+
+## Intl.ZonedDateTimeFormat.prototype.formatToParts(x)
+Throw TypeError if the x is not a Temporal.ZonedDateTime 
+(Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
+
+## Intl.ZonedDateTimeFormat.prototype.formatRange(x, y)
+Throw TypeError if the x is not a Temporal.ZonedDateTime 
+Throw TypeError if the y is not a Temporal.ZonedDateTime 
+Throw RangeError if the timeZone of x and y are different
+(Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
+
+## Intl.ZonedDateTimeFormat.prototype.formatRangeToParts(x, y)
+Throw TypeError if the x is not a Temporal.ZonedDateTime 
+Throw TypeError if the y is not a Temporal.ZonedDateTime 
+Throw RangeError if the timeZone of x and y are different
+(Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
+
+## Intl.ZonedDateTimeFormat.prototype.withTimeZone( [ timeZone ] )
+timeZone could be a String, a Temporal.TimeZone or undefined.
+return a Intl.DateTimeFormat with the timeZone set to the string or undefined
+
+## Intl.DateTimeFormat.prototype.toZonedDateTimeFormat()
+return a Intl.ZonedDateTimeFormat ignoring the timeZone in the internal slot.
 
 
 
