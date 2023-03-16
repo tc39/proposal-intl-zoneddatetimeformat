@@ -25,6 +25,11 @@ There was an earlier attempt in the Temporal proposal to change Intl.DateTimeFor
 This proposal propose to use a new format Intl.ZonedDateTimeFormat to format [Temporal.ZonedDateTime](https://tc39.es/proposal-temporal/#sec-temporal-zoneddatetime-objects) objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
 
 
+
+
+
+
+# Below should be removed later
 ## Before creating a proposal
 
 Please ensure the following:
