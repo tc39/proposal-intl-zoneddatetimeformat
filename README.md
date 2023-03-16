@@ -7,7 +7,7 @@ Stage 0
 
 # Moviation
 
-Temporal proposal to enhance the pre-existing Intl.DateTimeFormat to support some, but not all, of the Temporal objects:
+[Temporal proposal](hhttps://tc39.es/proposal-temporal/) to enhance the pre-existing Intl.DateTimeFormat to support some, but not all, of the Temporal objects:
 * Temporal.PlainDateTime
 * Temporal.PlainDate
 * Temporal.PlainTime
@@ -18,11 +18,11 @@ Temporal proposal to enhance the pre-existing Intl.DateTimeFormat to support som
 Other Temporal objects are not prosposed to be formatted by Intl.DateTimeFormat:
 * Temporal.Calendar 
 * Temporal.TimeZone
-* Temporal.Duration: Formatted by [Intl.DurationFormat](https://github.com/tc39/proposal-intl-duration-format)
+* Temporal.Duration: Formatted by [Intl.DurationFormat](https://tc39.es/proposal-intl-duration-format/)
 
 There was an earlier attempt in the Temporal proposal to change Intl.DateTimeFormat to format Temporal.ZonedDateTime but cannot reach consensus after endless dicussion.
 
-This proposal propose to use a new format Intl.ZonedDateTimeFormat to format Temporal.ZonedDateTime objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
+This proposal propose to use a new format Intl.ZonedDateTimeFormat to format [Temporal.ZonedDateTime](https://tc39.es/proposal-temporal/#sec-temporal-zoneddatetime-objects) objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
 
 
 ## Before creating a proposal
