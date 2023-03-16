@@ -4,20 +4,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="./spec.js"></script>
 <pre class="metadata">
-title: Proposal Title Goes Here
-stage: -1
-contributors: Your Name(s) Here
+title: Intl ZonedDateTimeFormat Proposal
+stage: 0
+copyright: true
+contributors: Google, Ecma International
 </pre>
 
-<emu-clause id="sec-demo-clause">
-  <h1>This is an emu-clause</h1>
-  <p>This is an algorithm:</p>
-  <emu-alg>
-    1. Let _proposal_ be *undefined*.
-    1. If IsAccepted(_proposal_), then
-      1. Let _stage_ be *0*<sub>ℤ</sub>.
-    1. Else,
-      1. Let _stage_ be *-1*<sub>ℤ</sub>.
-    1. Return ? ToString(_proposal_).
-  </emu-alg>
-</emu-clause>
+<emu-intro id="sec-intro">
+  <h1>Introduction</h1>
+
+  <p>This proposal propose a new Intl object Intl.ZonedDateTime format to format Temporal.ZonedDateTime objects and enhance Intl.DateTimeFormat by adding a new function to return a Intl.ZonedDateTimeFormat from information stored its internal slots.</p>
+  See <a href="https://github.com/FrankYFTang/intl-zoneddatetimeformat">the README</a> for more context.</p>
+</emu-intro>
+
+<emu-biblio href="./biblio.json"></emu-biblio>
+<emu-import href="./datetimeformat.html"></emu-import>
+<emu-import href="./zoneddatetimeformat.html"></emu-import>

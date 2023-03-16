@@ -1,0 +1,658 @@
+<emu-clause id="zoneddatetimeformat-objects">
+  <h1>ZonedDateTimeFormat Objects</h1>
+
+  <emu-clause id="sec-intl-zoneddatetimeformat-constructor">
+    <h1>The Intl.ZonedDateTimeFormat Constructor</h1>
+
+    <p>
+      The Intl.ZonedDateTimeFormat constructor is the <dfn>%ZonedDateTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat">
+      <h1>Intl.ZonedDateTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>
+        When the `Intl.ZonedDateTimeFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
+        1. Let _zdtf_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%ZonedDateTimeFormat.prototype%"*, &laquo; [[InitializedZonedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[RangePattern]] &raquo;).
+        1. Perform ? InitializeZonedDateTimeFormat(_zdtf_, _locales_, _options_).
+        1. Return _zdtf_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-initializezoneddatetimeformat" aoid="InitializeZonedDateTimeFormat">
+      <h1>InitializeZonedDateTimeFormat ( _dateTimeFormat_, _locales_, _options_ )</h1>
+
+      <p>
+        The abstract operation InitializeZonedDateTimeFormat accepts the arguments _dateTimeFormat_ (which must be an object), _locales_, and _options_. It initializes _dateTimeFormat_ as a ZonedDateTimeFormat object. This abstract operation functions as follows:
+      </p>
+
+      <p>
+        The following algorithm refers to the `type` nonterminal from <a href="https://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. TBW.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-zoneddatetimeformat-constructor">
+    <h1>Properties of the Intl.ZonedDateTimeFormat Constructor</h1>
+
+    <p>
+      The Intl.ZonedDateTimeFormat constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype">
+      <h1>Intl.ZonedDateTimeFormat.prototype</h1>
+
+      <p>
+        The value of `Intl.ZonedDateTimeFormat.prototype` is %ZonedDateTimeFormat.prototype%.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.supportedlocalesof">
+      <h1>Intl.ZonedDateTimeFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
+
+      <p>
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be %ZonedDateTimeFormat%.[[AvailableLocales]].
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; *"ca"*, *"hc"*, *"nu"* &raquo;.
+      </p>
+
+      <emu-note>
+        Unicode Technical Standard #35 describes four locale extension keys that are relevant to date and time formatting: *"ca"* for calendar, *"hc"* for hour cycle, *"nu"* for numbering system (of formatted numbers), and *"tz"* for time zone. ZonedDateTimeFormat, however, requires that the time zone is specified through the *"timeZone"* property in the options objects.
+      </emu-note>
+
+      <p>
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
+      </p>
+
+      <ul>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[nu]] must be a List that does not include the values *"native"*, *"traditio"*, or *"finance"*.
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;.
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
+          <ul>
+            <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
+            <li>weekday, year, month, day, hour, minute, second</li>
+            <li>weekday, year, month, day</li>
+            <li>year, month, day</li>
+            <li>year, month</li>
+            <li>month, day</li>
+            <li>hour, minute, second, fractionalSecondDigits</li>
+            <li>hour, minute, second</li>
+            <li>hour, minute</li>
+            <li>dayPeriod, hour</li>
+            <li>dayPeriod, hour, minute, second</li>
+            <li>dayPeriod, hour, minute</li>
+          </ul>
+          Each of the records must also have the following fields:
+          <ol>
+            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+            <li>
+              A [[rangePatterns]] field with a Record value:
+                <ul>
+                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-zoneddatetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
+                    <ul>
+                      <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is [[Month]], it contains the range pattern that should be used to format a date range where the era and year values are the same, but the month value is different.</li>
+                      <li>The record will contain the following fields:</li>
+                        <ul>
+                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>. All fields required to format a date for any of the [[PatternParts]] records must be present.</li>
+                          <li>A [[PatternParts]] field whose value is a list of Records each representing a part of the range pattern. Each record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field is one of the String values *"shared"*, *"startRange"*, or *"endRange"*. It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</li>
+                        </ul>
+                    </ul>
+                  </li>
+                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
+                </ul>
+            </li>
+            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
+            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+          </ol>
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[ZonedDateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
+          <ol>
+            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
+            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
+          </ol>
+          For [[ZonedDateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested record which also has [[full]], [[long]], [[medium]] and [[short]] fields. The [[full]], [[long]], [[medium]] and [[short]] fields in the enclosing record refer to the date style of the range pattern, while the fields in the nested record refers to the time style of the range pattern. The value of these fields in the nested record is a record with a [[rangePatterns]] field and a [[rangePatterns12]] field which are similar to the [[rangePatterns]] and [rangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
+         </li>
+      </ul>
+
+      <emu-note>
+        For example, an implementation might include the following record as part of its English locale data:
+        <ul>
+          <li>[[hour]]: *"numeric"*</li>
+          <li>[[minute]]: *"numeric"*</li>
+          <li>[[pattern]]: *"{hour}:{minute}"*</li>
+          <li>[[pattern12]]: *"{hour}:{minute} {ampm}"*</li>
+          <li>[[rangePatterns]]:</li>
+          <ul>
+            <li>[[Hour]]:<ul>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+              </ul>
+            </ul></li>
+            <li>[[Minute]]:<ul>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+              </ul>
+            </ul></li>
+            <li>[[Default]]:<ul>
+              <li>[[year]]: *"2-digit"*</li>
+              <li>[[month]]: *"numeric"*</li>
+              <li>[[day]]: *"numeric"*</li>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
+              </ul>
+            </ul></li>
+          </ul>
+          <li>[[rangePatterns12]]:
+          <ul>
+            <li>[[Hour]]:<ul>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
+              </ul>
+            </ul></li>
+            <li>[[Minute]]:<ul>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
+              </ul>
+            </ul></li>
+            <li>[[Default]]:<ul>
+              <li>[[year]]: *"2-digit"*</li>
+              <li>[[month]]: *"numeric"*</li>
+              <li>[[day]]: *"numeric"*</li>
+              <li>[[hour]]: *"numeric"*</li>
+              <li>[[minute]]: *"numeric"*</li>
+              <li>[[PatternParts]]:</li>
+              <ul>
+                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
+                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
+              </ul>
+            </ul></li>
+          </ul></li>
+        </ul>
+      </emu-note>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
+      </emu-note>
+
+      <emu-table id="table-zoneddatetimeformat-rangepatternfields">
+        <emu-caption>Range pattern fields</emu-caption>
+
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Range Pattern Field</th>
+              <th>Pattern String Field</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Era]]</td>
+            <td>*"era"*</td>
+          </tr>
+          <tr>
+            <td>[[Year]]</td>
+            <td>*"year"*</td>
+          </tr>
+          <tr>
+            <td>[[Month]]</td>
+            <td>*"month"*</td>
+          </tr>
+          <tr>
+            <td>[[Day]]</td>
+            <td>*"day"*</td>
+          </tr>
+          <tr>
+            <td>[[AmPm]]</td>
+            <td>*"ampm"*</td>
+          </tr>
+          <tr>
+            <td>[[DayPeriod]]</td>
+            <td>*"dayPeriod"*</td>
+          </tr>
+          <tr>
+            <td>[[Hour]]</td>
+            <td>*"hour"*</td>
+          </tr>
+          <tr>
+            <td>[[Minute]]</td>
+            <td>*"minute"*</td>
+          </tr>
+          <tr>
+            <td>[[Second]]</td>
+            <td>*"second"*</td>
+          </tr>
+          <tr>
+            <td>[[FractionalSecondDigits]]</td>
+            <td>*"fractionalSecondDigits"*</td>
+          </tr>
+        </table>
+
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-zoneddatetimeformat-prototype-object">
+    <h1>Properties of the Intl.ZonedDateTimeFormat Prototype Object</h1>
+
+    <p>
+      The Intl.ZonedDateTimeFormat prototype object is itself an ordinary object. <dfn>%ZonedDateTimeFormat.prototype%</dfn> is not an Intl.ZonedDateTimeFormat instance and does not have an [[InitializedZonedDateTimeFormat]] internal slot or any of the other internal slots of Intl.ZonedDateTimeFormat instance objects.
+    </p>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.constructor">
+      <h1>Intl.ZonedDateTimeFormat.prototype.constructor</h1>
+
+      <p>
+        The initial value of `Intl.ZonedDateTimeFormat.prototype.constructor` is %ZonedDateTimeFormat%.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype-@@tostringtag">
+      <h1>Intl.ZonedDateTimeFormat.prototype [ @@toStringTag ]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the String value *"Intl.ZonedDateTimeFormat"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.format">
+      <h1>Intl.ZonedDateTimeFormat.prototype.format ( _date_ )</h1>
+
+      <p>
+        When the `format` method is called with an argument _date_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _zdtf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_zdtf_, [[InitializedZonedDateTimeFormat]]).
+        1. If Type(_date_) is not Object or _date_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception..
+        1. TBW.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ZonedDateTimeFormat.prototype.formatToParts">
+      <h1>Intl.ZonedDateTimeFormat.prototype.formatToParts ( _date_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an argument _date_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _zdtf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_zdtf_, [[InitializedZonedDateTimeFormat]]).
+        1. If Type(_date_) is not Object or _date_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception..
+        1. TB1.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.formatRange">
+      <h1>Intl.ZonedDateTimeFormat.prototype.formatRange ( _startDate_, _endDate_ )</h1>
+
+      <p>
+        When the `formatRange` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _zdtf_ be *this* value.
+        1. Perform ? RequireInternalSlot(_zdtf_, [[InitializedZonedDateTimeFormat]]).
+        1. If Type(_startDate_) is not Object or _startDate_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception.
+        1. If Type(_endDate_) is not Object or _endDate_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception.
+        1. If _startDate_.[[TimeZone]] is not equal to _endDate_.[[TimeZone]], throw a *RangeError* exception.
+        1. TBW.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ZonedDateTimeFormat.prototype.formatRangeToParts">
+      <h1>Intl.ZonedDateTimeFormat.prototype.formatRangeToParts ( _startDate_, _endDate_ )</h1>
+
+      <p>
+        When the `formatRangeToParts` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _zdtf_ be *this* value.
+        1. Perform ? RequireInternalSlot(_zdtf_, [[InitializedZonedDateTimeFormat]]).
+        1. If Type(_startDate_) is not Object or _startDate_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception.
+        1. If Type(_endDate_) is not Object or _endDate_ does not have an [[InitializedTemporalZonedDateTime]] internal slot, throw a *TypeError* exception.
+        1. If _startDate_.[[TimeZone]] is not equal to _endDate_.[[TimeZone]], throw a *RangeError* exception.
+        1. TBW.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.resolvedoptions">
+      <h1>Intl.ZonedDateTimeFormat.prototype.resolvedOptions ( )</h1>
+
+      <p>
+        This function provides access to the locale and options computed during initialization of the object.
+      </p>
+
+      <emu-alg>
+        1. Let _zdtf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_zdtf_, [[InitializedZonedDateTimeFormat]]).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
+        1. For each row of <emu-xref href="#table-zoneddatetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
+          1. Let _p_ be the Property value of the current row.
+          1. If _p_ is *"hour12"*, then
+            1. Let _hc_ be _zdtf_.[[HourCycle]].
+            1. If _hc_ is *"h11"* or *"h12"*, let _v_ be *true*.
+            1. Else if, _hc_ is *"h23"* or *"h24"*, let _v_ be *false*.
+            1. Else, let _v_ be *undefined*.
+          1. Else,
+            1. Let _v_ be the value of _zdtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If the Internal Slot value of the current row is an Internal Slot value in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>, then
+            1. If _zdtf_.[[DateStyle]] is not *undefined* or _zdtf_.[[TimeStyle]] is not *undefined*, then
+              1. Let _v_ be *undefined*.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-zoneddatetimeformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of ZonedDateTimeFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>*"locale"*</td>
+          </tr>
+          <tr>
+            <td>[[Calendar]]</td>
+            <td>*"calendar"*</td>
+          </tr>
+          <tr>
+            <td>[[NumberingSystem]]</td>
+            <td>*"numberingSystem"*</td>
+          </tr>
+          <tr>
+            <td>[[HourCycle]]</td>
+            <td>*"hourCycle"*</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>*"hour12"*</td>
+          </tr>
+          <tr>
+            <td>[[Weekday]]</td>
+            <td>*"weekday"*</td>
+          </tr>
+          <tr>
+            <td>[[Era]]</td>
+            <td>*"era"*</td>
+          </tr>
+          <tr>
+            <td>[[Year]]</td>
+            <td>*"year"*</td>
+          </tr>
+          <tr>
+            <td>[[Month]]</td>
+            <td>*"month"*</td>
+          </tr>
+          <tr>
+            <td>[[Day]]</td>
+            <td>*"day"*</td>
+          </tr>
+          <tr>
+            <td>[[DayPeriod]]</td>
+            <td>*"dayPeriod"*</td>
+          </tr>
+          <tr>
+            <td>[[Hour]]</td>
+            <td>*"hour"*</td>
+          </tr>
+          <tr>
+            <td>[[Minute]]</td>
+            <td>*"minute"*</td>
+          </tr>
+          <tr>
+            <td>[[Second]]</td>
+            <td>*"second"*</td>
+          </tr>
+          <tr>
+            <td>[[FractionalSecondDigits]]</td>
+            <td>*"fractionalSecondDigits"*</td>
+          </tr>
+          <tr>
+            <td>[[TimeZoneName]]</td>
+            <td>*"timeZoneName"*</td>
+          </tr>
+          <tr>
+            <td>[[DateStyle]]</td>
+            <td>*"dateStyle"*</td>
+          </tr>
+          <tr>
+            <td>[[TimeStyle]]</td>
+            <td>*"timeStyle"*</td>
+          </tr>
+        </table>
+      </emu-table>
+
+      <p>
+        For web compatibility reasons, if the property *"hourCycle"* is set, the *"hour12"* property should be set to *true* when *"hourCycle"* is *"h11"* or *"h12"*, or to *false* when *"hourCycle"* is *"h23"* or *"h24"*.
+      </p>
+
+      <emu-note>
+        For compatibility with versions prior to the fifth edition, the *"hour12"* property is set in addition to the *"hourCycle"* property.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.withtimezone">
+      <h1>Intl.ZonedDateTimeFormat.prototype.withTimeZone ( [ _timeZone_ ] )</h1>
+
+      <p>
+        This function return a Intl.DateTimeFormat.
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be the *this* value.
+        1. If _timeZone_ is *undefined*, then
+          1. Set _tz_ to DefaultTimeZone().
+        1. Else,
+          1. Set _timeZone_ to ? ToString(_timeZone_).
+          1. If the result of ! IsValidTimeZoneName(_timeZone_) is false, then
+            1. Throw a *RangeError* exception.
+          1. Set _tz_ to ! CanonicalizeTimeZoneName(_timeZone_).
+        1. Let _dtf_ be ? OrdinaryCreateFromConstructor(%Intl.DateTimeFormat%, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedZonedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Set _dtf_.[[Locale]] to _zdtf_.[[Locale]].
+        1. Set _dtf_.[[Calendar]] to _zdtf_.[[Calendar]].
+        1. Set _dtf_.[[NumberingSystem]] to _zdtf_.[[NumberingSystem]].
+        1. Set _dtf_.[[HourCycle]] to _zdtf_.[[HourCycle]].
+        1. Set _dtf_.[[Weekday]] to _zdtf_.[[Weekday]].
+        1. Set _dtf_.[[Era]] to _zdtf_.[[Era]].
+        1. Set _dtf_.[[Year]] to _zdtf_.[[Year]].
+        1. Set _dtf_.[[Month]] to _zdtf_.[[Month]].
+        1. Set _dtf_.[[Day]] to _zdtf_.[[Day]].
+        1. Set _dtf_.[[DayPeriod]] to _zdtf_.[[DayPeriod]].
+        1. Set _dtf_.[[Hour]] to _zdtf_.[[Hour]].
+        1. Set _dtf_.[[Minute]] to _zdtf_.[[Minute]].
+        1. Set _dtf_.[[Second]] to _zdtf_.[[Second]].
+        1. Set _dtf_.[[FractionalSecondDigits]] to _zdtf_.[[FractionalSecondDigits]].
+        1. Set _dtf_.[[TimeZoneName]] to _zdtf_.[[TimeZoneName]].
+        1. Set _dtf_.[[DateStyle]] to _zdtf_.[[DateStyle]].
+        1. Set _dtf_.[[TimeStyle]] to _zdtf_.[[TimeStyle]].
+        1. Set _dtf_.[[Pattern]] to _zdtf_.[[Pattern]].
+        1. Set _dtf_.[[RangePattern]] to _zdtf_.[[RangePattern]].
+        1. Set _dtf_.[[TimeZone]] to _tz_.
+        1. Return _dtf_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-zoneddatetimeformat-instances">
+    <h1>Properties of Intl.ZonedDateTimeFormat Instances</h1>
+
+    <p>
+      Intl.ZonedDateTimeFormat instances are ordinary objects that inherit properties from %ZonedDateTimeFormat.prototype%.
+    </p>
+
+    <p>
+      Intl.ZonedDateTimeFormat instances have an [[InitializedZonedDateTimeFormat]] internal slot.
+    </p>
+
+    <p>
+      Intl.ZonedDateTimeFormat instances also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[Calendar]] is a String value with the *"type"* given in Unicode Technical Standard #35 for the calendar used for formatting.</li>
+      <li>[[NumberingSystem]] is a String value with the *"type"* given in Unicode Technical Standard #35 for the numbering system used for formatting.</li>
+      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-zoneddatetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-zero integer Number value indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
+      <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.zoneddatetimeformat-internal-slots"></emu-xref>.</li>
+      <li>[[RangePatterns]] is a Record as described in <emu-xref href="#sec-intl.zoneddatetimeformat-internal-slots"></emu-xref>.</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-zoneddatetimeformat-abstracts">
+    <h1>Abstract Operations for ZonedDateTimeFormat Objects</h1>
+
+    <p>
+      Several ZonedDateTimeFormat algorithms use values from the following table, which provides internal slots, property names and allowable values for the components of date and time formats:
+    </p>
+
+    <emu-table id="table-zoneddatetimeformat-components">
+      <emu-caption>Components of date and time formats</emu-caption>
+      <table class="real-table">
+        <thead>
+          <tr>
+            <th>Internal Slot</th>
+            <th>Property</th>
+            <th>Values</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>[[Weekday]]</td>
+          <td>*"weekday"*</td>
+          <td>*"narrow"*, *"short"*, *"long"*</td>
+        </tr>
+        <tr>
+          <td>[[Era]]</td>
+          <td>*"era"*</td>
+          <td>*"narrow"*, *"short"*, *"long"*</td>
+        </tr>
+        <tr>
+          <td>[[Year]]</td>
+          <td>*"year"*</td>
+          <td>*"2-digit"*, *"numeric"*</td>
+        </tr>
+        <tr>
+          <td>[[Month]]</td>
+          <td>*"month"*</td>
+          <td>*"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"*</td>
+        </tr>
+        <tr>
+          <td>[[Day]]</td>
+          <td>*"day"*</td>
+          <td>*"2-digit"*, *"numeric"*</td>
+        </tr>
+        <tr>
+          <td>[[DayPeriod]]</td>
+          <td>*"dayPeriod"*</td>
+          <td>*"narrow"*, *"short"*, *"long"*</td>
+        </tr>
+        <tr>
+          <td>[[Hour]]</td>
+          <td>*"hour"*</td>
+          <td>*"2-digit"*, *"numeric"*</td>
+        </tr>
+        <tr>
+          <td>[[Minute]]</td>
+          <td>*"minute"*</td>
+          <td>*"2-digit"*, *"numeric"*</td>
+        </tr>
+        <tr>
+          <td>[[Second]]</td>
+          <td>*"second"*</td>
+          <td>*"2-digit"*, *"numeric"*</td>
+        </tr>
+        <tr>
+          <td>[[FractionalSecondDigits]]</td>
+          <td>*"fractionalSecondDigits"*</td>
+          <td>*1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub></td>
+        </tr>
+        <tr>
+          <td>[[TimeZoneName]]</td>
+          <td>*"timeZoneName"*</td>
+          <td>*"short"*, *"long"*, *"shortOffset"*, *"longOffset"*, *"shortGeneric"*, *"longGeneric"*</td>
+        </tr>
+      </table>
+    </emu-table>
+  </emu-clause>
+</emu-clause>
