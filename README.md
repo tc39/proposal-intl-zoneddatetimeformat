@@ -27,39 +27,39 @@ This proposal propose to use a new format Intl.ZonedDateTimeFormat to format [Te
 
 # API Proposal
 ## Intl.ZonedDateTimeFormat constructor
-Same as Intl.DateTimeFormat except it will throw RangeError if timeZone is presented in the option bag.
+* Same as Intl.DateTimeFormat except it will throw RangeError if timeZone is presented in the option bag.
 ## Intl.ZonedDateTimeFormat.supportedLocales()
 ## Intl.ZonedDateTimeFormat.prototype.resolvedOptions()
-without return timeZone
+* without return timeZone
 
 ## Intl.ZonedDateTimeFormat.prototype.format(x)
-Throw TypeError if x is not a Temporal.ZonedDateTime 
-(Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
+* Throw TypeError if x is not a Temporal.ZonedDateTime 
+* (Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
 
 ## Intl.ZonedDateTimeFormat.prototype.formatToParts(x)
-Throw TypeError if x is not a Temporal.ZonedDateTime 
-(Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
+* Throw TypeError if x is not a Temporal.ZonedDateTime 
+* (Later on, we may decide to accept a string which can be used to construct a Temporal.ZonedDateTime )
 
 ## Intl.ZonedDateTimeFormat.prototype.formatRange(x, y)
-Throw TypeError if x is not a Temporal.ZonedDateTime 
-Throw TypeError if y is not a Temporal.ZonedDateTime 
-Throw RangeError if the timeZone of x and y are different
-(Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
+* Throw TypeError if x is not a Temporal.ZonedDateTime 
+* Throw TypeError if y is not a Temporal.ZonedDateTime 
+* Throw RangeError if the timeZone of x and y are different
+* (Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
 
 ## Intl.ZonedDateTimeFormat.prototype.formatRangeToParts(x, y)
-Throw TypeError if x is not a Temporal.ZonedDateTime 
-Throw TypeError if y is not a Temporal.ZonedDateTime 
-Throw RangeError if the timeZone of x and y are different
-(Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
+* Throw TypeError if x is not a Temporal.ZonedDateTime 
+* Throw TypeError if y is not a Temporal.ZonedDateTime 
+* Throw RangeError if the timeZone of x and y are different
+* (Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
 
 ## Intl.ZonedDateTimeFormat.prototype.withTimeZone( [ timeZone ] )
-timeZone could be a valid IANA timezone String, a Temporal.TimeZone or undefined (to indicate the current user timezone).
-return an Intl.DateTimeFormat with the timeZone set to the string or undefined
+* timeZone could be a valid IANA timezone String or undefined (to indicate the current user timezone).
+* return an Intl.DateTimeFormat with the timeZone set to the string or undefined
 
 ## Intl.DateTimeFormat.prototype.toZonedDateTimeFormat()
-return an Intl.ZonedDateTimeFormat ignoring the timeZone in the internal slot.
+* return an Intl.ZonedDateTimeFormat ignoring the timeZone in the internal slot.
 
-
+<hr/>
 
 # Below should be removed later
 ## Before creating a proposal
