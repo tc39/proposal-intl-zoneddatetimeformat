@@ -28,7 +28,7 @@ This proposal proposes a new Intl formatter, Intl.ZonedDateTimeFormat, desiged t
 
 ## What Temporl.ZonedDateTime.prototype.toLocaleString cannot?
 
-Two reasons:
+Two reasons why we cannot just use Temporl.ZonedDateTime.prototype.toLocaleString but need a new object:
 * The need to formate a string to represent the time period between TWO Temporl.ZonedDateTime. toLocaleString can only format string for one of them, but not the range between two Temporl.ZonedDateTime. The formatRange (and formtRangeToParts) function will be able to do so in this object.
 * Some of the important information could be computed and cashed into the object to speed up some performance during the format function. 
 
