@@ -5,7 +5,7 @@ This is a proposal for Intl.ZonedDateTimeFormat, a new format to support the for
 # Stage
 Stage 0
 
-# Moviation
+# Motivation
 
 [Temporal proposal](hhttps://tc39.es/proposal-temporal/) enhances the pre-existing Intl.DateTimeFormat to support some, but not all, Temporal objects:
 * Temporal.PlainDateTime
@@ -15,22 +15,22 @@ Stage 0
 * Temporal.PlainYearMonth
 * Temporal.Instant
 
-Other Temporal objects are prosposed NOT to be be formatted by Intl.DateTimeFormat:
+Other Temporal objects are proposed NOT to be be formatted by Intl.DateTimeFormat:
 * Temporal.Calendar 
 * Temporal.TimeZone
 * Temporal.Duration: Formatted by [Intl.DurationFormat](https://tc39.es/proposal-intl-duration-format/)
 
-There was an earlier attempt in the Temporal proposal to change Intl.DateTimeFormat to also format Temporal.ZonedDateTime but c[annot reach consensus after endless dicussion about how to resolve the timeZone from both objects](https://github.com/tc39/proposal-temporal/pull/2479#issuecomment-1472407831).
+There was an earlier attempt in the Temporal proposal to change Intl.DateTimeFormat to also format Temporal.ZonedDateTime but [cannot reach consensus after endless discussion about how to resolve the timeZone from both objects](https://github.com/tc39/proposal-temporal/pull/2479#issuecomment-1472407831).
 
-This proposal proposes a new Intl formatter, Intl.ZonedDateTimeFormat, desiged to format [Temporal.ZonedDateTime](https://tc39.es/proposal-temporal/#sec-temporal-zoneddatetime-objects) objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
+This proposal proposes a new Intl formatter, Intl.ZonedDateTimeFormat, designed to format [Temporal.ZonedDateTime](https://tc39.es/proposal-temporal/#sec-temporal-zoneddatetime-objects) objects and leave Intl.DateTimeFormat not to support the format of Temporal.ZonedDateTime.
 
 # Alternative Consideration
 
-## What Temporl.ZonedDateTime.prototype.toLocaleString cannot?
+## What Temporal.ZonedDateTime.prototype.toLocaleString cannot?
 
-Two reasons why we cannot just use Temporl.ZonedDateTime.prototype.toLocaleString but need a new object:
-* The need to formate a string to represent the time period between TWO Temporl.ZonedDateTime. toLocaleString can only format string for one of them, but not the range between two Temporl.ZonedDateTime. The formatRange (and formtRangeToParts) function will be able to do so in this object.
-* Some of the important information could be computed and cashed into the object to speed up some performance during the format function. 
+Two reasons why we cannot just use Temporal.ZonedDateTime.prototype.toLocaleString but need a new object:
+* The need to format string to represent the time period between TWO Temporal.ZonedDateTime. toLocaleString can only format string for one of them, but not the range between two Temporal.ZonedDateTime. The formatRange (and formatRangeToParts) function will be able to do so in this object.
+* Some of the important information could be computed and cached into the object to speed up some performance during the format function. 
 
 ## Why not just Intl.DateTimeFormat?
 Intl.DateTimeFormat was designed to format the Date object which does not contains a timeZone nor a Calendar. The TimeZone and Calendar of the Intl.DateTimeFormat therefore were resolved during the time of the object construction. Temporal.ZonedDateTime, in the other hand, always carry a TimeZone. Reusing Intl.DateTimeFormat to format Temporal.ZonedDateTime would cause conflict of timeZone and damage the purity of the Intl.DateTimeFormat API.
