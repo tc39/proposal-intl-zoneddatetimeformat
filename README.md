@@ -62,12 +62,12 @@ Intl.DateTimeFormat was designed to format the Date object which does not contai
 * Throw RangeError if the timeZone of x and y are different
 * (Later on, we may decide to accept string as x or y which can be used to construct a Temporal.ZonedDateTime )
 
-## Intl.ZonedDateTimeFormat.prototype.withTimeZone( [ timeZone ] )
-* timeZone could be a valid IANA timezone String or undefined (to indicate the current user timezone).
-* return an Intl.DateTimeFormat with the timeZone set to the string or undefined
+## ~~Intl.ZonedDateTimeFormat.prototype.withTimeZone( [ timeZone ] )~~
+* ~~timeZone could be a valid IANA timezone String or undefined (to indicate the current user timezone).~~
+* ~~return an Intl.DateTimeFormat with the timeZone set to the string or undefined~~
 
-## Intl.DateTimeFormat.prototype.toZonedDateTimeFormat()
-* return an Intl.ZonedDateTimeFormat ignoring the timeZone in the internal slot.
+## ~~Intl.DateTimeFormat.prototype.toZonedDateTimeFormat()~~
+* ~~return an Intl.ZonedDateTimeFormat ignoring the timeZone in the internal slot.~~
 
 <hr/>
 
