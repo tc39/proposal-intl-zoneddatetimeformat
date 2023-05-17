@@ -18,5 +18,4 @@ contributors: Google, Ecma International
 </emu-intro>
 
 <emu-biblio href="./biblio.json"></emu-biblio>
-<emu-import href="./datetimeformat.html"></emu-import>
 <emu-import href="./zoneddatetimeformat.html"></emu-import>

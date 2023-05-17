@@ -509,49 +509,7 @@
         For compatibility with versions prior to the fifth edition, the *"hour12"* property is set in addition to the *"hourCycle"* property.
       </emu-note>
     </emu-clause>
-
-    <emu-clause id="sec-intl.zoneddatetimeformat.prototype.withtimezone">
-      <h1>Intl.ZonedDateTimeFormat.prototype.withTimeZone ( [ _timeZone_ ] )</h1>
-
-      <p>
-        This function return a Intl.DateTimeFormat.
-      </p>
-
-      <emu-alg>
-        1. Let _dtf_ be the *this* value.
-        1. If _timeZone_ is *undefined*, then
-          1. Set _tz_ to DefaultTimeZone().
-        1. Else,
-          1. Set _timeZone_ to ? ToString(_timeZone_).
-          1. If the result of ! IsValidTimeZoneName(_timeZone_) is false, then
-            1. Throw a *RangeError* exception.
-          1. Set _tz_ to ! CanonicalizeTimeZoneName(_timeZone_).
-        1. Let _dtf_ be ? OrdinaryCreateFromConstructor(%Intl.DateTimeFormat%, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedZonedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
-        1. Set _dtf_.[[Locale]] to _zdtf_.[[Locale]].
-        1. Set _dtf_.[[Calendar]] to _zdtf_.[[Calendar]].
-        1. Set _dtf_.[[NumberingSystem]] to _zdtf_.[[NumberingSystem]].
-        1. Set _dtf_.[[HourCycle]] to _zdtf_.[[HourCycle]].
-        1. Set _dtf_.[[Weekday]] to _zdtf_.[[Weekday]].
-        1. Set _dtf_.[[Era]] to _zdtf_.[[Era]].
-        1. Set _dtf_.[[Year]] to _zdtf_.[[Year]].
-        1. Set _dtf_.[[Month]] to _zdtf_.[[Month]].
-        1. Set _dtf_.[[Day]] to _zdtf_.[[Day]].
-        1. Set _dtf_.[[DayPeriod]] to _zdtf_.[[DayPeriod]].
-        1. Set _dtf_.[[Hour]] to _zdtf_.[[Hour]].
-        1. Set _dtf_.[[Minute]] to _zdtf_.[[Minute]].
-        1. Set _dtf_.[[Second]] to _zdtf_.[[Second]].
-        1. Set _dtf_.[[FractionalSecondDigits]] to _zdtf_.[[FractionalSecondDigits]].
-        1. Set _dtf_.[[TimeZoneName]] to _zdtf_.[[TimeZoneName]].
-        1. Set _dtf_.[[DateStyle]] to _zdtf_.[[DateStyle]].
-        1. Set _dtf_.[[TimeStyle]] to _zdtf_.[[TimeStyle]].
-        1. Set _dtf_.[[Pattern]] to _zdtf_.[[Pattern]].
-        1. Set _dtf_.[[RangePattern]] to _zdtf_.[[RangePattern]].
-        1. Set _dtf_.[[TimeZone]] to _tz_.
-        1. Return _dtf_.
-      </emu-alg>
-    </emu-clause>
   </emu-clause>
-
   <emu-clause id="sec-properties-of-intl-zoneddatetimeformat-instances">
     <h1>Properties of Intl.ZonedDateTimeFormat Instances</h1>
 
