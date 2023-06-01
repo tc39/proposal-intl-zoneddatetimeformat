@@ -3,7 +3,9 @@
 This is a proposal for Intl.ZonedDateTimeFormat, a new format to support the formating of Temporal.ZonedDateTime object.
 
 # Stage
-Stage 0
+Stage 1
+
+* [Slides for Stage 1 Advancement for TC39 2023 May Meeting](https://docs.google.com/presentation/d/1JhEFhB4wUkHfuNeJlCPUaxBv2oGJOKnaF2j8jfmhdi0)
 
 # Moviation
 
