@@ -6,6 +6,8 @@ This is a proposal for Intl.ZonedDateTimeFormat, a new format to support the for
 Stage 1
 
 * [Slides for Stage 1 Advancement for TC39 2023 May Meeting](https://docs.google.com/presentation/d/1JhEFhB4wUkHfuNeJlCPUaxBv2oGJOKnaF2j8jfmhdi0)
+  * [TG2 May 2023 Discussion](https://github.com/tc39/ecma402/blob/master/meetings/notes-2023-04-06.md#zoneddatetimeformat)
+  * [TC39 May 2023 Discussion](https://github.com/tc39/proposal-intl-zoneddatetimeformat)
 
 # Moviation
 
